@@ -41,28 +41,16 @@ class MenuController extends AbstractController
      */
     public function index(Request $request)
     {
-        if ($request->expectsJson()) {
-            $perPage = per_page($request, 1000);
-            $query = AdminMenu::query()->withCount('children')->orderBy('order')->orderBy('id');
-            if ($request->has('parent_id')) {
-                $query->where('parent_id', $request->integer('parent_id'));
-            } else {
-                $query->whereNull('parent_id');
-            }
-            $items = $query->withCount(['children'])->paginate($perPage);
-
-            return MenuResource::collection($items);
+        $perPage = per_page($request, 1000);
+        $query = AdminMenu::query()->withCount('children')->orderBy('order')->orderBy('id');
+        if ($request->has('parent_id')) {
+            $query->where('parent_id', $request->integer('parent_id'));
+        } else {
+            $query->whereNull('parent_id');
         }
+        $items = $query->withCount(['children'])->paginate($perPage);
 
-        return view('admin.menu.index');
-    }
-
-    /**
-     * 添加菜单页
-     */
-    public function create()
-    {
-        return view('admin.menu.create');
+        return MenuResource::collection($items);
     }
 
     /**
@@ -73,16 +61,6 @@ class MenuController extends AbstractController
         AdminMenu::create($request->validated());
 
         return $this->success(trans('system.create_success'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(AdminMenu $menu)
-    {
-        return view('admin.menu.edit', [
-            'item' => $menu,
-        ]);
     }
 
     /**

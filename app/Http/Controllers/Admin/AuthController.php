@@ -27,15 +27,10 @@ class AuthController extends AbstractController
      */
     public function __construct()
     {
-        $this->middleware('auth:admin')->except(['showLoginForm', 'login']);
-    }
-
-    /**
-     * 登录页
-     */
-    public function showLoginForm()
-    {
-        return view('admin.auth.login');
+        $this->middleware('auth:admin')->except(['login']);
+        // 登录限速
+        $throttle = 'throttle:'.settings('user.login_throttle', '6,1');
+        $this->middleware($throttle)->only(['login']);
     }
 
     /**

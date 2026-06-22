@@ -37,19 +37,15 @@ class AreaController extends AbstractController
      */
     public function index(Request $request)
     {
-        if ($request->expectsJson()) {
-            $query = Area::query()->orderBy('order')->orderBy('id');
-            if ($request->has('parent_id')) {
-                $query->where('parent_id', $request->integer('parent_id'));
-            } else {
-                $query->whereNull('parent_id');
-            }
-            $items = $query->withCount(['children'])->paginate(per_page($request, 1000));
-
-            return AreaResource::collection($items);
+        $query = Area::query()->orderBy('order')->orderBy('id');
+        if ($request->has('parent_id')) {
+            $query->where('parent_id', $request->integer('parent_id'));
+        } else {
+            $query->whereNull('parent_id');
         }
+        $items = $query->withCount(['children'])->paginate(per_page($request, 1000));
 
-        return view('admin.area.index');
+        return AreaResource::collection($items);
     }
 
     /**
@@ -73,14 +69,6 @@ class AreaController extends AbstractController
     }
 
     /**
-     * 添加菜单页
-     */
-    public function create()
-    {
-        return view('admin.area.create');
-    }
-
-    /**
      * 添加菜单
      */
     public function store(Request $request): JsonResponse
@@ -95,16 +83,6 @@ class AreaController extends AbstractController
         Area::create($validated);
 
         return $this->success(trans('system.create_success'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Area $area)
-    {
-        return view('admin.area.edit', [
-            'item' => $area,
-        ]);
     }
 
     /**

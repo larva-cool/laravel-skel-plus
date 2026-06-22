@@ -11,7 +11,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\Admin\Admin\SearchAdminRequest;
 use App\Http\Requests\Admin\Admin\StoreAdminRequest;
 use App\Http\Requests\Admin\Admin\UpdateAdminPasswordRequest;
-use App\Http\Requests\Admin\Admin\UpdateAdminPersonRequest;
 use App\Http\Requests\Admin\Admin\UpdateAdminRequest;
 use App\Http\Requests\Admin\User\UpdateAvatarRequest;
 use App\Http\Requests\SwitchRequest;
@@ -48,40 +47,28 @@ class AdminController extends AbstractController
      */
     public function index(SearchAdminRequest $request)
     {
-        if ($request->expectsJson()) {
-            $perPage = per_page($request, 15);
+        $perPage = per_page($request, 15);
 
-            // 基础查询
-            $query = Admin::query()->with('roles');
+        // 基础查询
+        $query = Admin::query()->with('roles');
 
-            if ($request->filled('keyword')) {
-                $query->whereAny(['name', 'username', 'email', 'phone'], 'like', '%'.$request->keyword.'%');
-            }
-            if ($request->filled('last_login_at') && $request->last_login_at[0] && $request->last_login_at[1]) {
-                $query->whereBetween('last_login_at', $request->last_login_at);
-            }
-            if ($request->filled('created_at') && $request->created_at[0] && $request->created_at[1]) {
-                $query->whereBetween('created_at', $request->created_at);
-            }
-            // 动态排序
-            if ($request->filled('field') && $request->filled('order')) {
-                $query->orderBy($request->field, $request->order);
-            }
-            // 获取分页数据
-            $items = $query->paginate($perPage);
-
-            return AdminResource::collection($items);
+        if ($request->filled('keyword')) {
+            $query->whereAny(['name', 'username', 'email', 'phone'], 'like', '%'.$request->keyword.'%');
         }
+        if ($request->filled('last_login_at') && $request->last_login_at[0] && $request->last_login_at[1]) {
+            $query->whereBetween('last_login_at', $request->last_login_at);
+        }
+        if ($request->filled('created_at') && $request->created_at[0] && $request->created_at[1]) {
+            $query->whereBetween('created_at', $request->created_at);
+        }
+        // 动态排序
+        if ($request->filled('field') && $request->filled('order')) {
+            $query->orderBy($request->field, $request->order);
+        }
+        // 获取分页数据
+        $items = $query->paginate($perPage);
 
-        return view('admin.admin.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.admin.create');
+        return AdminResource::collection($items);
     }
 
     /**
@@ -90,14 +77,6 @@ class AdminController extends AbstractController
      * @return Factory|View|Application|object
      */
     public function person(Request $request)
-    {
-        return view('admin.admin.person', ['admin' => $request->user('admin')]);
-    }
-
-    /**
-     * 个人信息保存
-     */
-    public function storePerson(UpdateAdminPersonRequest $request): JsonResponse
     {
         /** @var Admin $admin */
         $admin = $request->user('admin');
@@ -128,14 +107,6 @@ class AdminController extends AbstractController
         $admin->assignRole($request->roles);
 
         return $this->success(trans('system.create_success'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Request $request, Admin $admin)
-    {
-        return view('admin.admin.edit', ['item' => $admin]);
     }
 
     /**

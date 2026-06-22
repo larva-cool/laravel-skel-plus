@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Route;
 
 // 认证路由
 Route::group(['prefix' => 'auth'], function (Registrar $registrar) {
-    $registrar->get('login', [\App\Http\Controllers\Admin\AuthController::class, 'showLoginForm'])->name('login');
     $registrar->post('login', [\App\Http\Controllers\Admin\AuthController::class, 'login'])->name('login.auth');
     $registrar->post('logout', [\App\Http\Controllers\Admin\AuthController::class, 'logout'])->name('logout');
 });

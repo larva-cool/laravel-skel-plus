@@ -10,7 +10,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\Admin\StoreAdminRoleRequest;
 use App\Http\Resources\Admin\RoleResource;
-use App\Models\System\Permission;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
@@ -39,13 +38,9 @@ class RoleController extends AbstractController
      */
     public function index(Request $request)
     {
-        if ($request->expectsJson()) {
-            $items = Role::query()->orderBy('id')->paginate(per_page($request, 15));
+        $items = Role::query()->orderBy('id')->paginate(per_page($request, 15));
 
-            return RoleResource::collection($items);
-        }
-
-        return view('admin.role.index');
+        return RoleResource::collection($items);
     }
 
     /**
@@ -59,18 +54,6 @@ class RoleController extends AbstractController
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $permissions = Permission::query()->select('name', 'display_name')->orderBy('id')->get()->toArray();
-
-        return view('admin.role.create', [
-            'permissions' => $permissions,
-        ]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreAdminRoleRequest $request): JsonResponse
@@ -80,22 +63,6 @@ class RoleController extends AbstractController
         $role->givePermissionTo($request->permissions);
 
         return $this->success(trans('system.create_success'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Role $role)
-    {
-        $rolePermissions = $role->getAllPermissions()->pluck('name')->toArray();
-        $permissions = Permission::query()->select('name', 'display_name')->orderBy('id')->get()->toArray();
-
-        return view('admin.role.edit', [
-            'item' => $role,
-            'permissions' => $permissions,
-            'rolePermissions' => $rolePermissions,
-            'update_url' => route('admin.roles.update', $role->id),
-        ]);
     }
 
     /**

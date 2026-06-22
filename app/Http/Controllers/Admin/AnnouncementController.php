@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enum\UserType;
 use App\Http\Requests\Admin\Announcement\StoreAnnouncementRequest;
 use App\Http\Requests\Admin\Announcement\UpdateAnnouncementRequest;
 use App\Http\Requests\SwitchRequest;
@@ -41,29 +40,9 @@ class AnnouncementController extends AbstractController
      */
     public function index(Request $request)
     {
-        if ($request->expectsJson()) {
-            $items = Announcement::query()->orderByDesc('id')->paginate(per_page($request));
+        $items = Announcement::query()->orderByDesc('id')->paginate(per_page($request));
 
-            return AnnouncementResource::collection($items);
-        }
-
-        return view('admin.announcement.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $coverageOptions = UserType::options();
-
-        return view('admin.announcement.create', [
-            'coverage_options' => $coverageOptions,
-            'effective_time_type_options' => [
-                0 => '永久有效',
-                1 => '定时有效',
-            ],
-        ]);
+        return AnnouncementResource::collection($items);
     }
 
     /**
@@ -74,21 +53,6 @@ class AnnouncementController extends AbstractController
         Announcement::create($request->validated());
 
         return $this->success(trans('system.create_success'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Announcement $announcement)
-    {
-        return view('admin.announcement.edit', [
-            'item' => $announcement,
-            'coverage_options' => UserType::options(),
-            'effective_time_type_options' => [
-                0 => '永久有效',
-                1 => '定时有效',
-            ],
-        ]);
     }
 
     /**

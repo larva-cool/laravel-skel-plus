@@ -42,41 +42,19 @@ class DictController extends AbstractController
      */
     public function index(Request $request)
     {
-        if ($request->expectsJson()) {
-            $perPage = per_page($request, 15);
-            $query = Dict::query()->orderBy('order')->orderBy('id');
-            if ($request->has('parent_id')) {
-                $query->where('parent_id', $request->integer('parent_id'));
-            } else {
-                $query->whereNull('parent_id');
-            }
-            if ($request->filled('name')) {
-                $query->where('name', 'like', '%'.$request->input('name').'%');
-            }
-            $items = $query->withCount(['children'])->orderBy('order')->paginate($perPage);
-
-            return DictResource::collection($items);
+        $perPage = per_page($request, 15);
+        $query = Dict::query()->orderBy('order')->orderBy('id');
+        if ($request->has('parent_id')) {
+            $query->where('parent_id', $request->integer('parent_id'));
+        } else {
+            $query->whereNull('parent_id');
         }
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%'.$request->input('name').'%');
+        }
+        $items = $query->withCount(['children'])->orderBy('order')->paginate($perPage);
 
-        return view('admin.dict.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Request $request)
-    {
-        return view('admin.dict.create');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function createData(Request $request)
-    {
-        return view('admin.dict.create_data', [
-            'parent_id' => $request->input('parent_id', null),
-        ]);
+        return DictResource::collection($items);
     }
 
     /**
@@ -97,22 +75,6 @@ class DictController extends AbstractController
         Dict::create($request->validated());
 
         return $this->success(trans('system.create_success'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Request $request, Dict $dict)
-    {
-        return view('admin.dict.edit', ['item' => $dict]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function editData(Request $request, Dict $dict)
-    {
-        return view('admin.dict.edit_data', ['item' => $dict]);
     }
 
     /**

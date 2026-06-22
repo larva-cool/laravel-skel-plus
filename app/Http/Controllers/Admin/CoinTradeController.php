@@ -1,7 +1,10 @@
 <?php
+
 /**
  * This is NOT a freeware, use is subject to license terms.
  */
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
@@ -30,14 +33,11 @@ class CoinTradeController extends AbstractController
      */
     public function index(Request $request)
     {
-        if ($request->expectsJson()) {
-            $query = CoinTrade::query()
-                ->with(['user'])
-                ->orderByDesc('id');
-            $items = $query->paginate(per_page($request));
+        $query = CoinTrade::query()
+            ->with(['user'])
+            ->orderByDesc('id');
+        $items = $query->paginate(per_page($request));
 
-            return CoinTradeResource::collection($items);
-        }
-        return view('admin.coin_trade.index');
+        return CoinTradeResource::collection($items);
     }
 }

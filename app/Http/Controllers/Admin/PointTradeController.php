@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This is NOT a freeware, use is subject to license terms.
  */
@@ -7,7 +8,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Resources\Admin\PointTradeResource;
 use App\Models\Point\PointTrade;
 use Illuminate\Http\Request;
 
@@ -32,15 +32,9 @@ class PointTradeController extends AbstractController
      */
     public function index(Request $request)
     {
-        if ($request->expectsJson()) {
-            $query = PointTrade::query()
-                ->with(['user'])
-                ->orderByDesc('id');
-            $items = $query->paginate(per_page($request));
-
-            return PointTradeResource::collection($items);
-        }
-
-        return view('admin.point_trade.index');
+        $query = PointTrade::query()
+            ->with(['user'])
+            ->orderByDesc('id');
+        $items = $query->paginate(per_page($request));
     }
 }

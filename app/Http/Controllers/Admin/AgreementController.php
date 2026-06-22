@@ -39,22 +39,10 @@ class AgreementController extends AbstractController
      */
     public function index(Request $request)
     {
-        if ($request->expectsJson()) {
-            $perPage = per_page($request, 15);
-            $items = Agreement::query()->orderBy('id')->paginate($perPage);
+        $perPage = per_page($request, 15);
+        $items = Agreement::query()->orderBy('id')->paginate($perPage);
 
-            return AgreementResource::collection($items);
-        }
-
-        return view('admin.agreement.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.agreement.create');
+        return AgreementResource::collection($items);
     }
 
     /**
@@ -65,16 +53,6 @@ class AgreementController extends AbstractController
         Agreement::create($request->validated());
 
         return $this->success(trans('system.create_success'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Agreement $agreement)
-    {
-        return view('admin.agreement.edit', [
-            'item' => $agreement,
-        ]);
     }
 
     /**

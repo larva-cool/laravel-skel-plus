@@ -37,35 +37,23 @@ class AttachmentController extends AbstractController
      */
     public function index(SearchAttachmentRequest $request)
     {
-        if ($request->expectsJson()) {
-            // 基础查询
-            $query = Attachment::query()->with('user');
-            if ($request->filled('keyword')) {
-                $query->whereAny(['file_name'], 'like', '%'.$request->keyword.'%');
-            }
-            if ($request->filled('created_at') && $request->created_at[0] && $request->created_at[1]) {
-                $query->whereBetween('created_at', $request->created_at);
-            }
-            // 动态排序
-            if ($request->filled('field') && $request->filled('order')) {
-                $query->orderBy($request->field, $request->order);
-            }
-
-            // 获取分页数据
-            $items = $query->paginate(per_page($request, 15));
-
-            return AttachmentResource::collection($items);
+        // 基础查询
+        $query = Attachment::query()->with('user');
+        if ($request->filled('keyword')) {
+            $query->whereAny(['file_name'], 'like', '%'.$request->keyword.'%');
+        }
+        if ($request->filled('created_at') && $request->created_at[0] && $request->created_at[1]) {
+            $query->whereBetween('created_at', $request->created_at);
+        }
+        // 动态排序
+        if ($request->filled('field') && $request->filled('order')) {
+            $query->orderBy($request->field, $request->order);
         }
 
-        return view('admin.attachment.index');
-    }
+        // 获取分页数据
+        $items = $query->paginate(per_page($request, 15));
 
-    /**
-     * 附件上传
-     */
-    public function create()
-    {
-        return view('admin.attachment.create');
+        return AttachmentResource::collection($items);
     }
 
     /**

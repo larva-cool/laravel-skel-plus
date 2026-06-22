@@ -39,14 +39,10 @@ class UserGroupController extends AbstractController
      */
     public function index(Request $request)
     {
-        if ($request->expectsJson()) {
-            $perPage = per_page($request, 15);
-            $items = UserGroup::query()->orderBy('id')->paginate($perPage);
+        $perPage = per_page($request, 15);
+        $items = UserGroup::query()->orderBy('id')->paginate($perPage);
 
-            return UserGroupResource::collection($items);
-        }
-
-        return view('admin.user_group.index');
+        return UserGroupResource::collection($items);
     }
 
     /**
@@ -60,14 +56,6 @@ class UserGroupController extends AbstractController
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.user_group.create');
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreUserGroupRequest $request)
@@ -75,17 +63,6 @@ class UserGroupController extends AbstractController
         UserGroup::create($request->validated());
 
         return $this->success(trans('system.create_success'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(UserGroup $user_group)
-    {
-        return view('admin.user_group.edit', [
-            'item' => $user_group,
-            'update_url' => route('admin.user_groups.update', $user_group->id),
-        ]);
     }
 
     /**

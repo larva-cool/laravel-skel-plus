@@ -37,21 +37,9 @@ class PageController extends AbstractController
      */
     public function index(Request $request)
     {
-        if ($request->expectsJson()) {
-            $items = Page::query()->orderByDesc('id')->paginate(per_page($request));
+        $items = Page::query()->orderByDesc('id')->paginate(per_page($request));
 
-            return PageResource::collection($items);
-        }
-
-        return view('admin.page.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.page.create');
+        return PageResource::collection($items);
     }
 
     /**
@@ -67,17 +55,6 @@ class PageController extends AbstractController
         Page::create($validated);
 
         return $this->success(trans('system.create_success'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Page $page)
-    {
-        return view('admin.page.edit', [
-            'item' => $page,
-            'update_url' => route('admin.pages.update', $page->id),
-        ]);
     }
 
     /**

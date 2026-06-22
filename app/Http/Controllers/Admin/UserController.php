@@ -40,43 +40,31 @@ class UserController extends AbstractController
      */
     public function index(Request $request)
     {
-        if ($request->expectsJson()) {
-            // 基础查询
-            $query = User::query()->with(['profile', 'extra']);
-            if ($request->filled('id')) {
-                $query->where('id', $request->id);
-            }
-            if ($request->filled('keyword')) {
-                $query->whereAny(['name', 'username', 'email', 'phone'], 'like', '%'.$request->keyword.'%');
-            }
-            if ($request->filled('last_login_at') && $request->last_login_at[0] && $request->last_login_at[1]) {
-                $query->whereHas('extra', function ($query) use ($request) {
-                    $query->whereBetween('last_login_at', $request->last_login_at);
-                });
-            }
-            if ($request->filled('created_at') && $request->created_at[0] && $request->created_at[1]) {
-                $query->whereBetween('created_at', $request->created_at);
-            }
-            // 动态排序
-            if ($request->filled('sortField') && $request->filled('sortOrder')) {
-                $query->orderBy($request->sortField, $request->sortOrder);
-            }
-            // 获取分页数据
-            $items = $query->orderByDesc('id')
-                ->paginate(per_page($request, 15));
-
-            return UserResource::collection($items);
+        // 基础查询
+        $query = User::query()->with(['profile', 'extra']);
+        if ($request->filled('id')) {
+            $query->where('id', $request->id);
         }
+        if ($request->filled('keyword')) {
+            $query->whereAny(['name', 'username', 'email', 'phone'], 'like', '%'.$request->keyword.'%');
+        }
+        if ($request->filled('last_login_at') && $request->last_login_at[0] && $request->last_login_at[1]) {
+            $query->whereHas('extra', function ($query) use ($request) {
+                $query->whereBetween('last_login_at', $request->last_login_at);
+            });
+        }
+        if ($request->filled('created_at') && $request->created_at[0] && $request->created_at[1]) {
+            $query->whereBetween('created_at', $request->created_at);
+        }
+        // 动态排序
+        if ($request->filled('sortField') && $request->filled('sortOrder')) {
+            $query->orderBy($request->sortField, $request->sortOrder);
+        }
+        // 获取分页数据
+        $items = $query->orderByDesc('id')
+            ->paginate(per_page($request, 15));
 
-        return view('admin.user.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.user.create');
+        return UserResource::collection($items);
     }
 
     /**
@@ -90,17 +78,6 @@ class UserController extends AbstractController
         $user->update($data);
 
         return $this->success(trans('system.create_success'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
-    {
-        return view('admin.user.edit', [
-            'item' => $user,
-            'update_url' => route('admin.users.update', $user),
-        ]);
     }
 
     /**

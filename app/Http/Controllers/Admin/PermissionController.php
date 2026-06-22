@@ -35,22 +35,10 @@ class PermissionController extends AbstractController
      */
     public function index(Request $request)
     {
-        if ($request->expectsJson()) {
-            $perPage = per_page($request, 15);
-            $items = Permission::query()->orderByDesc('id')->paginate($perPage);
+        $perPage = per_page($request, 15);
+        $items = Permission::query()->orderByDesc('id')->paginate($perPage);
 
-            return PermissionResource::collection($items);
-        }
-
-        return view('admin.permission.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.permission.create');
+        return PermissionResource::collection($items);
     }
 
     /**
@@ -61,17 +49,6 @@ class PermissionController extends AbstractController
         Permission::create($request->safe()->except('menus'));
 
         return $this->success(trans('system.create_success'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Permission $permission)
-    {
-        return view('admin.permission.edit', [
-            'item' => $permission,
-            'update_url' => route('admin.permissions.update', $permission->id),
-        ]);
     }
 
     /**
