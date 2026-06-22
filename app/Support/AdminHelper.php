@@ -8,8 +8,27 @@ namespace App\Support;
 use App\Models\Admin\Admin;
 use App\Models\Admin\AdminMenu;
 
+/**
+ * 管理员助手
+ *
+ * @author Tongle Xu <xutongle@gmail.com>
+ */
 class AdminHelper
 {
+    /**
+     * 通过账号查找用户
+     */
+    public static function findForAccount(string $account): ?Admin
+    {
+        if (filter_var($account, FILTER_VALIDATE_EMAIL)) {
+            return Admin::query()->whereNotNull('email')->where('email', $account)->first();
+        } elseif (preg_match('/^1[2-9]\d{9}$/', $account)) {
+            return Admin::query()->whereNotNull('phone')->where('phone', $account)->first();
+        } else {
+            return Admin::query()->whereNotNull('username')->where('username', $account)->first();
+        }
+    }
+
     /**
      * 读取左侧菜单
      * @param  Admin  $admin

@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Admin\Auth;
 
 use App\Models\Admin\Admin;
+use App\Support\AdminHelper;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -41,8 +42,7 @@ class PasswordLoginRequest extends FormRequest
     public function authenticate(): ?Admin
     {
         $account = $this->string('account');
-        //Admin::query()->where('')
-        $admin = UserHelper::findForAccount($account->toString());
+        $admin = AdminHelper::findForAccount($account->toString());
         if (! $admin || ! Hash::check($this->string('password')->toString(), $admin->password)) {
             validation_exception('password', trans('auth.failed'));
         }
