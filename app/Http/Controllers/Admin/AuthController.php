@@ -50,7 +50,7 @@ class AuthController extends AbstractController
         Event::dispatch(new LoginSucceeded($admin, $request->ip(), $request->server('REMOTE_PORT'), $request->userAgent()));
 
         $token['admin'] = new AdminResource($admin);
-        $token['menu'] = AdminHelper::getLeftMenus($admin);
+        $token['menus'] = AdminHelper::getLeftMenus($admin);
 
         return response()->json($token);
     }
