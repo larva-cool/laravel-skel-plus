@@ -32,8 +32,6 @@ class UserGroupResource extends JsonResource
             'show_toolbar' => $this->id != 1,
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
-            'edit_url' => route('admin.user_groups.edit', $this->id),
-            'delete_url' => route('admin.user_groups.destroy', $this->id),
         ];
     }
 }

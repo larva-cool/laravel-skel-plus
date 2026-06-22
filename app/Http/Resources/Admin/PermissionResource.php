@@ -36,9 +36,6 @@ class PermissionResource extends JsonResource
             'guard_name' => $this->guard_name,
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
-            'edit_url' => route('admin.permissions.edit', $this->id),
-            'update_url' => route('admin.permissions.update', $this->id),
-            'delete_url' => route('admin.permissions.destroy', $this->id),
         ];
     }
 }

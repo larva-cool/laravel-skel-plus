@@ -40,9 +40,6 @@ class AreaResource extends JsonResource
             'is_parent' => $this->children_count > 0,
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
-            'edit_url' => route('admin.areas.edit', ['area' => $this]),
-            'update_url' => route('admin.areas.update', ['area' => $this]),
-            'delete_url' => route('admin.areas.destroy', ['area' => $this]),
         ];
     }
 }

@@ -64,9 +64,6 @@ class UserResource extends JsonResource
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
             'deleted_at' => $this->deleted_at?->toDateTimeString(),
-            'edit_url' => route('admin.users.edit', $this->id),
-            'update_url' => route('admin.users.update', $this->id),
-            'delete_url' => route('admin.users.destroy', $this->id),
         ];
     }
 }

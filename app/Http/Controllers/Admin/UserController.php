@@ -17,6 +17,7 @@ use App\Models\User\Nickname;
 use App\Support\UserHelper;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
  * 用户管理
@@ -38,7 +39,7 @@ class UserController extends AbstractController
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): AnonymousResourceCollection
     {
         // 基础查询
         $query = User::query()->with(['profile', 'extra']);

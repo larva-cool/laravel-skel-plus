@@ -37,10 +37,6 @@ class DictResource extends JsonResource
             'order' => $this->order,
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
-            'edit_url' => route('admin.dicts.edit', $this->id),
-            'edit_data_url' => route('admin.dicts.edit_data', $this->id),
-            'update_url' => route('admin.dicts.update', $this->id),
-            'delete_url' => route('admin.dicts.destroy', $this->id),
         ];
     }
 }

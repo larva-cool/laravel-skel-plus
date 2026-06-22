@@ -12,6 +12,7 @@ use App\Http\Resources\Admin\AreaResource;
 use App\Models\System\Area;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
  * 地区管理
@@ -35,7 +36,7 @@ class AreaController extends AbstractController
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): AnonymousResourceCollection
     {
         $query = Area::query()->orderBy('order')->orderBy('id');
         if ($request->has('parent_id')) {
@@ -51,7 +52,7 @@ class AreaController extends AbstractController
     /**
      * 获取 Xm-select 菜单数据
      */
-    public function select(Request $request)
+    public function select(Request $request): JsonResponse
     {
         $items = Area::getTreeForXmSelect();
 
@@ -61,7 +62,7 @@ class AreaController extends AbstractController
     /**
      * 获取子菜单（为空、0则获取顶级菜单）
      */
-    public function children(Request $request)
+    public function children(Request $request): JsonResponse
     {
         $items = Area::getAreas($request->query('id'), ['id', 'name']);
 

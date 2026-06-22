@@ -15,6 +15,7 @@ use App\Http\Resources\Admin\AnnouncementResource;
 use App\Models\Announcement\Announcement;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
  * 公告控制器
@@ -38,7 +39,7 @@ class AnnouncementController extends AbstractController
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): AnonymousResourceCollection
     {
         $items = Announcement::query()->orderByDesc('id')->paginate(per_page($request));
 
@@ -58,7 +59,7 @@ class AnnouncementController extends AbstractController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAnnouncementRequest $request, Announcement $announcement)
+    public function update(UpdateAnnouncementRequest $request, Announcement $announcement): JsonResponse
     {
         $announcement->update($request->validated());
 
@@ -68,9 +69,10 @@ class AnnouncementController extends AbstractController
     /**
      * 更新状态
      *
+     * @param  SwitchRequest  $request
      * @return JsonResponse
      */
-    public function updateStatus(SwitchRequest $request)
+    public function updateStatus(SwitchRequest $request): JsonResponse
     {
         $dict = Announcement::query()->where('id', $request->id)->firstOrFail();
         $dict->update($request->safe()->only('status'));

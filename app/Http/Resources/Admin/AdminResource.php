@@ -42,9 +42,6 @@ class AdminResource extends JsonResource
             'show_toolbar' => $this->id == 10000000, // 是否显示编辑菜单
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
-            'edit_url' => route('admin.admins.edit', $this->id),
-            'update_url' => route('admin.admins.update', $this->id),
-            'delete_url' => route('admin.admins.destroy', $this->id),
         ];
     }
 }

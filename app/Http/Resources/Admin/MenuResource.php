@@ -48,9 +48,6 @@ class MenuResource extends JsonResource
             'is_parent' => $this->children_count > 0,
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
-            'edit_url' => route('admin.menus.edit', ['menu' => $this]),
-            'update_url' => route('admin.menus.update', ['menu' => $this]),
-            'delete_url' => route('admin.menus.destroy', ['menu' => $this]),
         ];
     }
 }

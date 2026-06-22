@@ -14,6 +14,7 @@ use App\Http\Resources\Admin\UserGroupResource;
 use App\Models\User\UserGroup;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
  * 用户组管理
@@ -37,7 +38,7 @@ class UserGroupController extends AbstractController
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): AnonymousResourceCollection
     {
         $perPage = per_page($request, 15);
         $items = UserGroup::query()->orderBy('id')->paginate($perPage);
@@ -58,7 +59,7 @@ class UserGroupController extends AbstractController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserGroupRequest $request)
+    public function store(StoreUserGroupRequest $request): JsonResponse
     {
         UserGroup::create($request->validated());
 
@@ -68,7 +69,7 @@ class UserGroupController extends AbstractController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserGroupRequest $request, UserGroup $user_group)
+    public function update(UpdateUserGroupRequest $request, UserGroup $user_group): JsonResponse
     {
         $user_group->update($request->validated());
 

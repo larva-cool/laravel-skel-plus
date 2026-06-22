@@ -40,7 +40,6 @@ class AttachmentResource extends JsonResource
             'file_ext' => $this->file_ext,
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
-            'delete_url' => route('admin.attachments.destroy', $this),
         ];
     }
 }

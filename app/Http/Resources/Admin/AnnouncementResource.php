@@ -40,9 +40,6 @@ class AnnouncementResource extends JsonResource
             'effective_end_time' => $this->effective_end_time?->toDateTimeString(),
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
-            'edit_url' => route('admin.announcements.edit', $this->id),
-            'update_url' => route('admin.announcements.update', $this->id),
-            'delete_url' => route('admin.announcements.destroy', $this->id),
         ];
     }
 }

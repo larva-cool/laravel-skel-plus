@@ -17,6 +17,7 @@ use App\Http\Resources\Admin\DictResource;
 use App\Models\System\Dict;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
  * 字典管理
@@ -40,7 +41,7 @@ class DictController extends AbstractController
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): AnonymousResourceCollection
     {
         $perPage = per_page($request, 15);
         $query = Dict::query()->orderBy('order')->orderBy('id');
@@ -60,7 +61,7 @@ class DictController extends AbstractController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDictRequest $request)
+    public function store(StoreDictRequest $request): JsonResponse
     {
         Dict::create($request->validated());
 
@@ -70,7 +71,7 @@ class DictController extends AbstractController
     /**
      * Store a newly created resource in storage.
      */
-    public function storeData(StoreDictDataRequest $request)
+    public function storeData(StoreDictDataRequest $request): JsonResponse
     {
         Dict::create($request->validated());
 
@@ -80,7 +81,7 @@ class DictController extends AbstractController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDictRequest $request, Dict $dict)
+    public function update(UpdateDictRequest $request, Dict $dict): JsonResponse
     {
         $dict->update($request->validated());
 

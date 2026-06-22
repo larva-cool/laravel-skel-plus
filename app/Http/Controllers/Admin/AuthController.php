@@ -38,9 +38,14 @@ class AuthController extends AbstractController
      */
     public function login(PasswordLoginRequest $request): JsonResponse
     {
-        $request->authenticate();
-        $request->session()->regenerate();
+        $admin = $request->authenticate();
+        $token = $admin->createToken();
+
         Event::dispatch(new LoginSucceeded($request->user('admin'), $request->ip(), $request->server('REMOTE_PORT'), $request->userAgent()));
+
+        $token['admin'] = $admin;
+        $token['p'] = $admin->permissions;
+        //$token['menu'] = $admin->menu;
 
         return $this->success(__('user.login_success'));
     }

@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Resources\Admin\CoinTradeResource;
 use App\Models\Coin\CoinTrade;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
  * 金币交易日志
@@ -31,7 +32,7 @@ class CoinTradeController extends AbstractController
     /**
      * 交易记录
      */
-    public function index(Request $request)
+    public function index(Request $request): AnonymousResourceCollection
     {
         $query = CoinTrade::query()
             ->with(['user'])

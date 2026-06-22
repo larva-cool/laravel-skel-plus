@@ -37,7 +37,6 @@ class PointTradeResource extends JsonResource
             'description' => $this->description,
             'type' => $this->type,
             'type_label' => $this->type_label,
-            'created_at' => $this->created_at?->toDateTimeString(),
         ];
     }
 }

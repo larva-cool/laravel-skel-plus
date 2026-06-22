@@ -17,11 +17,9 @@ use App\Http\Requests\SwitchRequest;
 use App\Http\Resources\Admin\AdminResource;
 use App\Models\Admin\Admin;
 use App\Support\UserHelper;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
  * 管理员管理
@@ -45,7 +43,7 @@ class AdminController extends AbstractController
     /**
      * Display a listing of the resource.
      */
-    public function index(SearchAdminRequest $request)
+    public function index(SearchAdminRequest $request): AnonymousResourceCollection
     {
         $perPage = per_page($request, 15);
 
@@ -73,10 +71,8 @@ class AdminController extends AbstractController
 
     /**
      * 个人信息
-     *
-     * @return Factory|View|Application|object
      */
-    public function person(Request $request)
+    public function person(Request $request): JsonResponse
     {
         /** @var Admin $admin */
         $admin = $request->user('admin');

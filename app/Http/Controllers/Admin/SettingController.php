@@ -15,6 +15,7 @@ use App\Http\Resources\Admin\SettingResource;
 use App\Models\System\Setting;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Arr;
 
 /**
@@ -37,7 +38,7 @@ class SettingController extends AbstractController
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): AnonymousResourceCollection
     {
         // 基础查询
         $query = Setting::query();
@@ -59,7 +60,7 @@ class SettingController extends AbstractController
     /**
      * 保存配置
      */
-    public function store(StoreSettingRequest $request)
+    public function store(StoreSettingRequest $request): JsonResponse
     {
         Setting::create($request->validated());
 
@@ -69,9 +70,11 @@ class SettingController extends AbstractController
     /**
      * 更新配置
      *
+     * @param  Setting  $setting
+     * @param  UpdateSettingRequest  $request
      * @return JsonResponse
      */
-    public function update(Setting $setting, UpdateSettingRequest $request)
+    public function update(Setting $setting, UpdateSettingRequest $request): JsonResponse
     {
         $setting->update($request->validated());
 

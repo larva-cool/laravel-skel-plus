@@ -34,8 +34,6 @@ class RoleResource extends JsonResource
             'guard_name' => $this->guard_name,
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
-            'edit_url' => route('admin.roles.edit', $this->id),
-            'delete_url' => route('admin.roles.destroy', $this->id),
         ];
     }
 }

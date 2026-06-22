@@ -37,8 +37,6 @@ class SettingResource extends JsonResource
             'order' => $this->order,
             'remark' => $this->remark,
             'updated_at' => $this->updated_at?->toDateTimeString(),
-            'edit_url' => route('admin.settings.edit', $this->id),
-            'delete_url' => route('admin.settings.destroy', $this->id),
         ];
     }
 }

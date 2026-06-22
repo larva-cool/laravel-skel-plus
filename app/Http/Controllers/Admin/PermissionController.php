@@ -13,6 +13,7 @@ use App\Http\Resources\Admin\PermissionResource;
 use App\Models\System\Permission;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
  * 权限管理
@@ -33,7 +34,7 @@ class PermissionController extends AbstractController
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): AnonymousResourceCollection
     {
         $perPage = per_page($request, 15);
         $items = Permission::query()->orderByDesc('id')->paginate($perPage);
@@ -44,7 +45,7 @@ class PermissionController extends AbstractController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAdminPermissionRequest $request)
+    public function store(StoreAdminPermissionRequest $request): JsonResponse
     {
         Permission::create($request->safe()->except('menus'));
 

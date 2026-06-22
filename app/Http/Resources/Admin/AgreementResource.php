@@ -36,9 +36,6 @@ class AgreementResource extends JsonResource
             'order' => $this->order,
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
-            'edit_url' => route('admin.agreements.edit', $this->id),
-            'update_url' => route('admin.agreements.update', $this->id),
-            'delete_url' => route('admin.agreements.destroy', $this->id),
         ];
     }
 }

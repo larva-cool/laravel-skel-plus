@@ -1,10 +1,10 @@
 # Laravel API 模板
 
-[![Tests](https://github.com/larva-cool/laravel-skel-pro/actions/workflows/tests.yml/badge.svg)](https://github.com/larva-cool/laravel-skel-pro/actions/workflows/tests.yml)
-[![Total Downloads](https://img.shields.io/packagist/dt/larva/laravel-skel-pro)](https://packagist.org/packages/larva/laravel-skel-pro)
-[![Latest Stable Version](https://img.shields.io/packagist/v/larva/laravel-skel-pro)](https://packagist.org/packages/larva/laravel-skel-pro)
-![badge](https://cnb.cool/larva-cool/laravel-skel-pro/-/badge/git/latest/code/vscode-started)
-![badge](https://cnb.cool/larva-cool/laravel-skel-pro/-/badge/git/latest/ci/pipeline-as-code)
+[![Tests](https://github.com/larva-cool/laravel-skel-plus/actions/workflows/tests.yml/badge.svg)](https://github.com/larva-cool/laravel-skel-plus/actions/workflows/tests.yml)
+[![Total Downloads](https://img.shields.io/packagist/dt/larva/laravel-skel-plus)](https://packagist.org/packages/larva/laravel-skel-plus)
+[![Latest Stable Version](https://img.shields.io/packagist/v/larva/laravel-skel-plus)](https://packagist.org/packages/larva/laravel-skel-plus)
+![badge](https://cnb.cool/larva-cool/laravel-skel-plus/-/badge/git/latest/code/vscode-started)
+![badge](https://cnb.cool/larva-cool/laravel-skel-plus/-/badge/git/latest/ci/pipeline-as-code)
 
 这是一个基于 Laravel 12.x 的 API 模板，采用 DDD 结构，内置 Sanctum 授权机制和用户系统，适合快速构建后端 API 服务。
 
@@ -45,7 +45,7 @@
 ### 1. 创建项目
 
 ```bash
-composer create-project larva/laravel-skel-pro:dev-master -vv
+composer create-project larva/laravel-skel-plus:dev-master -vv
 ```
 
 ### 2. 环境配置

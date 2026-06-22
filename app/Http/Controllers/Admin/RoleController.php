@@ -12,6 +12,7 @@ use App\Http\Requests\Admin\Admin\StoreAdminRoleRequest;
 use App\Http\Resources\Admin\RoleResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Spatie\Permission\Models\Role;
 
 /**
@@ -36,7 +37,7 @@ class RoleController extends AbstractController
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): AnonymousResourceCollection
     {
         $items = Role::query()->orderBy('id')->paginate(per_page($request, 15));
 

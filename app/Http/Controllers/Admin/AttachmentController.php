@@ -13,6 +13,7 @@ use App\Http\Requests\Admin\Attachment\StoreAttachmentRequest;
 use App\Http\Resources\Admin\AttachmentResource;
 use App\Models\System\Attachment;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
  * 附件管理
@@ -35,7 +36,7 @@ class AttachmentController extends AbstractController
     /**
      * Display a listing of the resource.
      */
-    public function index(SearchAttachmentRequest $request)
+    public function index(SearchAttachmentRequest $request): AnonymousResourceCollection
     {
         // 基础查询
         $query = Attachment::query()->with('user');

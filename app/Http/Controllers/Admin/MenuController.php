@@ -16,6 +16,7 @@ use App\Models\Admin\AdminMenu;
 use App\Support\TreeHelper;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
  * 菜单管理
@@ -39,7 +40,7 @@ class MenuController extends AbstractController
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): AnonymousResourceCollection
     {
         $perPage = per_page($request, 1000);
         $query = AdminMenu::query()->withCount('children')->orderBy('order')->orderBy('id');
@@ -66,7 +67,7 @@ class MenuController extends AbstractController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAdminMenuRequest $request, AdminMenu $menu)
+    public function update(UpdateAdminMenuRequest $request, AdminMenu $menu): JsonResponse
     {
         $menu->update($request->validated());
 

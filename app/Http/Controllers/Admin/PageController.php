@@ -12,6 +12,7 @@ use App\Http\Resources\Admin\PageResource;
 use App\Models\System\Page;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
  * 页面管理
@@ -35,7 +36,7 @@ class PageController extends AbstractController
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): AnonymousResourceCollection
     {
         $items = Page::query()->orderByDesc('id')->paginate(per_page($request));
 

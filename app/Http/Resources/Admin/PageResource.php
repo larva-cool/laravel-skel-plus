@@ -34,9 +34,6 @@ class PageResource extends JsonResource
             'desc' => $this->desc,
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
-            'edit_url' => route('admin.pages.edit', ['page' => $this]),
-            'update_url' => route('admin.pages.update', ['page' => $this]),
-            'delete_url' => route('admin.pages.destroy', ['page' => $this]),
         ];
     }
 }
