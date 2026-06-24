@@ -44,7 +44,7 @@ class AuthController extends AbstractController
     {
         $admin = $request->authenticate();
         $token = $admin->createDeviceToken('PC');
-        Event::dispatch(new Login('sanctum', $admin, false));
+        Event::dispatch(new Login('admin', $admin, false));
         Event::dispatch(new LoginSucceeded($admin, $request->ip(), $request->server('REMOTE_PORT'), $request->userAgent()));
 
         return response()->json($token);
@@ -63,7 +63,7 @@ class AuthController extends AbstractController
         $token = $request->user()->createDeviceToken('PC');
         // 一分钟后删除当前这个Token
         DeleteAccessTokenJob::dispatch($tokenModel->token)->delay(now()->addMinutes(1));
-        Event::dispatch(new Login('sanctum', $request->user(), false));
+        Event::dispatch(new Login('admin', $request->user(), false));
         Event::dispatch(new LoginSucceeded($request->user('admin'), $request->ip(), $request->server('REMOTE_PORT'), $request->userAgent()));
 
         return response()->json($token);

@@ -7,6 +7,22 @@
                 "boost:mcp"
             ],
             "cwd": "${workspaceFolder}"
+        },
+        "API文档": {
+            "command": "npx",
+            "args": [
+              "-y",
+              "apifox-mcp-server@latest",
+              "--site-id=5455708"
+            ]
+        },
+        "后台API文档": {
+            "command": "npx",
+            "args": [
+              "-y",
+              "apifox-mcp-server@latest",
+              "--site-id=5510593"
+            ]
         }
     }
 }

@@ -14,7 +14,7 @@ Route::group(['prefix' => 'auth'], function (Registrar $registrar) {
     $registrar->post('login', [\App\Http\Controllers\Admin\AuthController::class, 'login'])->name('login');
     $registrar->post('refresh-token', [\App\Http\Controllers\Admin\AuthController::class, 'refreshToken'])->name('refresh_token'); // 重新签发个人访问令牌
     $registrar->get('tokens', [\App\Http\Controllers\Admin\AuthController::class, 'tokens'])->name('tokens'); // 查询已经签发的所有令牌
-    $registrar->delete('tokens/{tokenId}', [\App\Http\Controllers\Api\V1\AuthController::class, 'destroyToken'])->name('destroy_token'); // 销毁指定的 Token
+    $registrar->delete('tokens/{tokenId}', [\App\Http\Controllers\Admin\AuthController::class, 'destroyToken'])->name('destroy_token'); // 销毁指定的 Token
     $registrar->delete('tokens', [\App\Http\Controllers\Admin\AuthController::class, 'destroyCurrentAccessToken'])->name('destroy_current_token'); // 销毁当前正在使用的 Token
 });
 
