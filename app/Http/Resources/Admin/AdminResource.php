@@ -39,7 +39,6 @@ class AdminResource extends JsonResource
             'status' => $this->status,
             'login_count' => $this->login_count,
             'last_login_at' => $this->last_login_at?->toDateTimeString(),
-            'show_toolbar' => $this->id == 10000000, // 是否显示编辑菜单
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
         ];

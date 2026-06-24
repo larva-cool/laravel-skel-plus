@@ -9,12 +9,12 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Resources\Admin\AdminResource;
-use App\Models\Admin\AdminMenu;
+use App\Models\Admin\Admin;
 use App\Models\User;
 use App\Models\User\UserStat;
-use App\Support\FileHelper;
+use App\Support\AdminHelper;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\DB;
  *
  * @author Tongle Xu <xutongle@msn.com>
  */
-class IndexController extends AbstractController
+class DashboardController extends AbstractController
 {
     /**
      * Constructor.
@@ -33,17 +33,30 @@ class IndexController extends AbstractController
     }
 
     /**
-     * Display home page.
+     * 返回当前登录的用户资料
      */
-    public function index()
+    public function user(Request $request): AdminResource
     {
-        return view('admin.index.index');
+        return new AdminResource($request->user());
+    }
+
+    /**
+     * 左侧菜单
+     * @param  Request  $request
+     * @return JsonResponse
+     */
+    public function menus(Request $request): JsonResponse
+    {
+        /** @var Admin $user */
+        $user = $request->user();
+        $menus = AdminHelper::getLeftMenus($user);
+        return response()->json($menus);
     }
 
     /**
      * Display dashboard page.
      */
-    public function dashboard()
+    public function info(): JsonResponse
     {
         // 今日新增用户数
         $todayUserCount = UserStat::getTodayRegistration();
@@ -74,7 +87,7 @@ class IndexController extends AbstractController
                 ->sum('new_user_count');
         }
 
-        return view('admin.index.dashboard', [
+        return response()->json([
             'today_user_count' => $todayUserCount,
             'day7_user_count' => $day7UserCount,
             'day30_user_count' => $day30UserCount,
@@ -86,32 +99,5 @@ class IndexController extends AbstractController
             'os' => PHP_OS,
             'day30_detail' => array_reverse($day30Detail),
         ]);
-    }
-
-    /**
-     * Get config.
-     */
-    public function config(): JsonResponse
-    {
-        $dashboard = AdminMenu::query()
-            ->select(['id', 'href', 'title'])->where('href', '/admin/dashboard')
-            ->first();
-        $config = FileHelper::json(public_path('admin/config.json'));
-        $config['logo']['title'] = config('app.name', 'Laravel');
-        $config['menu']['data'] = route('admin.menus.left-menus');
-        $config['menu']['select'] = $dashboard['id'] ?? '';
-        $config['tab']['index'] = $dashboard;
-
-        return response()->json($config);
-    }
-
-    /**
-     * 管理员资料
-     */
-    public function account(): AdminResource
-    {
-        $user = Auth::guard('admin')->user();
-
-        return new AdminResource($user);
     }
 }

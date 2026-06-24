@@ -10,10 +10,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Events\User\LoginSucceeded;
 use App\Http\Requests\Admin\Auth\PasswordLoginRequest;
-use App\Http\Resources\Admin\AdminResource;
 use App\Http\Resources\Admin\TokenResource;
 use App\Jobs\User\DeleteAccessTokenJob;
-use App\Support\AdminHelper;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -48,9 +46,6 @@ class AuthController extends AbstractController
         $token = $admin->createDeviceToken('PC');
         Event::dispatch(new Login('sanctum', $admin, false));
         Event::dispatch(new LoginSucceeded($admin, $request->ip(), $request->server('REMOTE_PORT'), $request->userAgent()));
-
-        $token['admin'] = new AdminResource($admin);
-        $token['menus'] = AdminHelper::getLeftMenus($admin);
 
         return response()->json($token);
     }

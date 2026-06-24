@@ -18,6 +18,15 @@ Route::group(['prefix' => 'auth'], function (Registrar $registrar) {
     $registrar->delete('tokens', [\App\Http\Controllers\Admin\AuthController::class, 'destroyCurrentAccessToken'])->name('destroy_current_token'); // 销毁当前正在使用的 Token
 });
 
+/**
+ * 控制台接口
+ */
+Route::group(['prefix' => 'dashboard'], function (Registrar $registrar) {
+    $registrar->get('user', [\App\Http\Controllers\Admin\DashboardController::class, 'user'])->name('user'); // 获取当前登录的用户信息
+    $registrar->get('menus', [\App\Http\Controllers\Admin\DashboardController::class, 'menus'])->name('menus'); // 获取当前登录的用户menus
+    $registrar->get('info', [\App\Http\Controllers\Admin\DashboardController::class, 'info'])->name('info'); // 后台Info
+});
+
 // RBAC
 Route::get('roles/select', [\App\Http\Controllers\Admin\RoleController::class, 'select'])->name('roles.select');
 Route::apiResource('roles', \App\Http\Controllers\Admin\RoleController::class, ['names' => 'roles'])->except(['show']);
