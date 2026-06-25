@@ -1,7 +1,7 @@
 {
     "mcpServers": {
         "laravel-boost": {
-            "command": "php84",
+            "command": "php82",
             "args": [
                 "artisan",
                 "boost:mcp"
@@ -16,7 +16,7 @@
                 "--site-id=5455708"
             ]
         },
-        "Skeleton V12 Admin": {
+        "Skeleton V12 Admin 文档": {
             "command": "npx",
             "args": [
                 "-y",
