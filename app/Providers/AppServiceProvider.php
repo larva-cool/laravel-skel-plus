@@ -12,7 +12,6 @@ use App\Models\Admin\Admin;
 use App\Models\PersonalAccessToken;
 use App\Services\SettingManagerService;
 use Illuminate\Auth\Middleware\Authenticate;
-use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -71,7 +70,7 @@ class AppServiceProvider extends ServiceProvider
 
         // 定义 API 速率限制器
         RateLimiter::for('api', function (object $request) {
-            return Limit::perMinute(60);
+            return \Illuminate\Cache\RateLimiting\Limit::perMinute(60);
         });
     }
 }
