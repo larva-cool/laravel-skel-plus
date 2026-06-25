@@ -520,8 +520,6 @@ class User extends Authenticatable
      */
     public function refreshLastActiveAt(): void
     {
-        $this->loadMissing('extra');
-
         if (empty($this->last_active_at) || $this->last_active_at->lt(Carbon::now()->subMinutes(5))) {
             $this->updateQuietly(['last_active_at' => Carbon::now()]);
         }
@@ -595,7 +593,7 @@ class User extends Authenticatable
     /**
      * 重置用户支付密码
      */
-    public function modifyPayPassword(string $password): void
+    public function resetPayPassword(string $password): void
     {
         $this->pay_password = $password;
         $this->saveQuietly();
