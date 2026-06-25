@@ -94,7 +94,6 @@ class UserExtra extends Model
     protected $attributes = [
         'invite_registered_count' => 0,
         'username_change_count' => 0,
-        'login_count' => 0,
     ];
 
     /**
@@ -115,6 +114,7 @@ class UserExtra extends Model
             'settings' => AsJson::class,
             'collection_count' => 'integer',
             'first_signed_at' => 'datetime',
+            'first_active_at' => 'datetime',
             'phone_verified_at' => 'datetime',
             'email_verified_at' => 'datetime',
         ];
