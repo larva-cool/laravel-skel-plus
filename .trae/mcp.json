@@ -8,20 +8,20 @@
             ],
             "cwd": "${workspaceFolder}"
         },
-        "API文档": {
+        "Skeleton V12 - API 文档": {
             "command": "npx",
             "args": [
-              "-y",
-              "apifox-mcp-server@latest",
-              "--site-id=5455708"
+                "-y",
+                "apifox-mcp-server@latest",
+                "--site-id=5455708"
             ]
         },
-        "后台API文档": {
+        "Skeleton V12 Admin": {
             "command": "npx",
             "args": [
-              "-y",
-              "apifox-mcp-server@latest",
-              "--site-id=5510593"
+                "-y",
+                "apifox-mcp-server@latest",
+                "--site-id=5510593"
             ]
         }
     }
