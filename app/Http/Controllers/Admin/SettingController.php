@@ -69,10 +69,6 @@ class SettingController extends AbstractController
 
     /**
      * 更新配置
-     *
-     * @param  Setting  $setting
-     * @param  UpdateSettingRequest  $request
-     * @return JsonResponse
      */
     public function update(Setting $setting, UpdateSettingRequest $request): JsonResponse
     {

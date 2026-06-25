@@ -68,9 +68,6 @@ class AnnouncementController extends AbstractController
 
     /**
      * 更新状态
-     *
-     * @param  SwitchRequest  $request
-     * @return JsonResponse
      */
     public function updateStatus(SwitchRequest $request): JsonResponse
     {

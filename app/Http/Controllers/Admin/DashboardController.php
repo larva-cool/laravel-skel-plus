@@ -42,14 +42,13 @@ class DashboardController extends AbstractController
 
     /**
      * 左侧菜单
-     * @param  Request  $request
-     * @return JsonResponse
      */
     public function menus(Request $request): JsonResponse
     {
         /** @var Admin $user */
         $user = $request->user();
         $menus = AdminHelper::getLeftMenus($user);
+
         return response()->json($menus);
     }
 

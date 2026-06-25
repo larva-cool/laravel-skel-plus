@@ -197,7 +197,7 @@ class User extends Authenticatable
     protected function phoneText(): Attribute
     {
         return Attribute::make(
-            get: fn(?string $value, $attributes) => mobile_replace($attributes['phone'])
+            get: fn (?string $value, $attributes) => mobile_replace($attributes['phone'])
         )->shouldCache();
     }
 
@@ -207,7 +207,7 @@ class User extends Authenticatable
     protected function avatar(): Attribute
     {
         return Attribute::make(
-            get: fn(?string $value) => UserHelper::getAvatar($value)
+            get: fn (?string $value) => UserHelper::getAvatar($value)
         );
     }
 
@@ -217,7 +217,7 @@ class User extends Authenticatable
     protected function socketStatus(): Attribute
     {
         return Attribute::make(get: function ($value, $attributes) {
-            return !empty($attributes['socket_id']) ? 'online' : 'offline';
+            return ! empty($attributes['socket_id']) ? 'online' : 'offline';
         });
     }
 
@@ -239,7 +239,7 @@ class User extends Authenticatable
     protected function statusLabel(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->status->label()
+            get: fn () => $this->status->label()
         )->shouldCache();
     }
 
@@ -387,7 +387,7 @@ class User extends Authenticatable
     {
         $this->loadMissing('wechatMp');
 
-        return !empty($this->wechatMp->openid) ? $this->wechatMp->openid : null;
+        return ! empty($this->wechatMp->openid) ? $this->wechatMp->openid : null;
     }
 
     /**
@@ -399,7 +399,7 @@ class User extends Authenticatable
     {
         $this->loadMissing('wechatMiniProgram');
 
-        return !empty($this->wechatMiniProgram->openid) ? $this->wechatMiniProgram->openid : null;
+        return ! empty($this->wechatMiniProgram->openid) ? $this->wechatMiniProgram->openid : null;
     }
 
     /**
@@ -407,7 +407,7 @@ class User extends Authenticatable
      */
     public function hasAvatar(): bool
     {
-        return !empty($this->getRawOriginal('avatar'));
+        return ! empty($this->getRawOriginal('avatar'));
     }
 
     /**
@@ -415,7 +415,7 @@ class User extends Authenticatable
      */
     public function hasPassword(): bool
     {
-        return !empty($this->password);
+        return ! empty($this->password);
     }
 
     /**
@@ -425,7 +425,7 @@ class User extends Authenticatable
     {
         $this->loadMissing('extra');
 
-        return !is_null($this->extra->phone_verified_at);
+        return ! is_null($this->extra->phone_verified_at);
     }
 
     /**
@@ -435,7 +435,7 @@ class User extends Authenticatable
     {
         $this->loadMissing('extra');
 
-        return !is_null($this->extra->email_verified_at);
+        return ! is_null($this->extra->email_verified_at);
     }
 
     /**
@@ -537,7 +537,7 @@ class User extends Authenticatable
     {
         $this->loadMissing('extra');
 
-        if (!$this->extra->first_active_at) {
+        if (! $this->extra->first_active_at) {
             $this->extra->updateQuietly(['first_active_at' => Carbon::now()]);
         }
 

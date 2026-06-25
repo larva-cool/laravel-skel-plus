@@ -3,6 +3,8 @@
  * This is NOT a freeware, use is subject to license terms.
  */
 
+declare(strict_types=1);
+
 namespace App\Support;
 
 use App\Models\Admin\Admin;
@@ -31,8 +33,6 @@ class AdminHelper
 
     /**
      * 读取左侧菜单
-     * @param  Admin  $admin
-     * @return array|null
      */
     public static function getLeftMenus(Admin $admin): ?array
     {
@@ -64,6 +64,7 @@ class AdminHelper
         if (! app()->environment('production')) {
             $treeItems = array_merge($treeItems, AdminMenu::getDefaultMenus());
         }
+
         return $treeItems;
     }
 }

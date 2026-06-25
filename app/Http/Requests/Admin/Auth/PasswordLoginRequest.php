@@ -16,6 +16,7 @@ use Illuminate\Validation\ValidationException;
 
 /**
  * 登录验证
+ *
  * @property-read string $account
  * @property-read string $password
  *

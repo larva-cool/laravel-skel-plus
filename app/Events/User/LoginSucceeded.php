@@ -58,7 +58,7 @@ class LoginSucceeded implements ShouldBroadcast
      * @param  Authenticatable  $user
      * @param  string  $ip
      * @param  int  $port
-     * @param string $userAgent
+     * @param  string  $userAgent
      */
     public function __construct($user, $ip, $port, $userAgent)
     {
