@@ -8,7 +8,7 @@
             ],
             "cwd": "${workspaceFolder}"
         },
-        "Skeleton V12 - API 文档": {
+        "API 文档": {
             "command": "npx",
             "args": [
                 "-y",
@@ -16,7 +16,7 @@
                 "--site-id=5455708"
             ]
         },
-        "Skeleton V12 Admin 文档": {
+        "Admin 文档": {
             "command": "npx",
             "args": [
                 "-y",
